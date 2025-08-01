@@ -1,0 +1,28 @@
+[project]
+name = "job-hunting-preparer"
+version = "0.1.0"
+description = "an assistant to help you prepare during job hunting period"
+authors = [
+    {name = "joel",email = "tang.j.joel@gmail.com"}
+]
+license = {text = "GPLv3"}
+readme = "README.md"
+requires-python = ">=3.12, <4.0"
+dependencies = [
+    "chainlit (>=2.6.3,<3.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "langchain-openai (>=0.3.28,<0.4.0)",
+    "langchain-postgres (>=0.0.15,<0.0.16)",
+    "python-docx (>=1.2.0,<2.0.0)",
+    "psycopg[binary] (>=3.2.9,<4.0.0)",
+    "psycopg-binary (>=3.2.9,<4.0.0)",
+    "langchain (>=0.3.27,<0.4.0)"
+]
+
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
