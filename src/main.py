@@ -9,8 +9,8 @@ from chainlit.logger import logger
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_postgres.vectorstores import PGVector
 
-from resume import no_resume_exists
-from utils.blob import process_docx, save_to_latest
+from resume import no_resume_exists, process_docx
+from utils.blob import save_to_latest
 from utils.db import LocalRecordManager, _cleanup, a_pgvector_engine
 from utils.envs import RESUMES_PATH, SUGGESTIONS_PATH
 
@@ -54,7 +54,7 @@ async def on_chat_start():
                 latestResume = item.resolve()
                 break
 
-    process_docx(latestResume)
+    process_docx(latestResume, recordmanager, vectordb)
 
 
 @cl.on_settings_update

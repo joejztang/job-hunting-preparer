@@ -16,9 +16,16 @@ deepclean:
 	docker compose down --volumes --remove-orphans
 	-docker rmi $$(docker images --filter "dangling=true" -q --no-trunc)
 
-# Run the application
+# Watch run the application
+run-watch:
+	docker compose -f docker-compose.yml up --watch
+
 run:
-	docker compose -f docker-compose.yml up -d
+	docker compose -f docker-compose.yml up
+
+# Rebuild and run
+rebuild-and-run:
+	docker compose -f docker-compose.yml up --build -d
 
 # # Development dependencies
 # dev-install:

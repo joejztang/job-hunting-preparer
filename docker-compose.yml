@@ -11,7 +11,21 @@ services:
       - "7860:7860"
     depends_on:
       - pgvector
-    command: ["chainlit", "run", "src/main.py", "--host", "0.0.0.0", "--port", "7860", "-h"]
+    restart: always
+    develop:
+      watch:
+        - action: rebuild
+          path: ./src
+          target: /app
+          ignore:
+            - /src/__pycache__
+        - action: rebuild
+          path: poetry.lock
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./src/.env:/app/src/.env
+        
+    command: ["chainlit", "run", "src/main.py", "--host", "0.0.0.0", "--port", "7860", "-h", "-w"]
     # command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860", "--log-config", "log-config.json"]
     # command: ["bash", "-c", "./scripts/start.sh"]
   pgvector:
