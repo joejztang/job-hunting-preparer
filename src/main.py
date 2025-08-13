@@ -47,14 +47,14 @@ async def on_chat_start():
 
         latestResume = Path(latestResume[0].path)
         save_to_latest(latestResume)
-    else:
-        latestPath = RESUMES_PATH / "latest"
-        for item in latestPath.iterdir():
-            if item.is_file():
-                latestResume = item.resolve()
-                break
 
-    process_docx(latestResume, recordmanager, vectordb)
+    resumeFilePath = None
+    for item in (RESUMES_PATH / "latest").iterdir():
+        if item.is_file():
+            resumeFilePath = item.resolve()
+            break
+
+    await process_docx(resumeFilePath, recordmanager, vectordb)
 
 
 @cl.on_settings_update

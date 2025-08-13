@@ -3,9 +3,9 @@ from pathlib import Path
 from typing import Any
 
 from chainlit.logger import logger
-from docx import Document
 from langchain.indexes import aindex
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader
 
 from utils.envs import RESUMES_PATH
 
@@ -35,12 +35,13 @@ async def process_docx(
     Process the uploaded DOCX file and extract its content.
     Put chunks into vectordb.
     """
-    doc = Document(str(docx_path))
+    loader = UnstructuredWordDocumentLoader(str(docx_path.resolve()))
+    docs = await loader.aload()
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap
     )
 
-    chunks = text_splitter.split_documents(doc)
+    chunks = text_splitter.split_documents(docs)
 
     index_result = await aindex(
         chunks,
